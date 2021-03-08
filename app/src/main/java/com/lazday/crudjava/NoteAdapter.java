@@ -3,6 +3,7 @@ package com.lazday.crudjava;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -35,6 +36,18 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
         final NoteModel.Data data = dataList.get(position);
         viewHolder.textNote.setText( data.getNote() );
+        viewHolder.container.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onUpdate(data);
+            }
+        });
+        viewHolder.imageDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onDelete(data);
+            }
+        });
     }
 
     @Override
@@ -43,20 +56,25 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        MaterialCardView container;
         TextView textNote;
+        MaterialCardView container;
+        ImageView imageDelete;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             textNote = itemView.findViewById(R.id.text_note);
+            container = itemView.findViewById(R.id.container);
+            imageDelete = itemView.findViewById(R.id.image_delete);
         }
     }
 
     public void setData(List<NoteModel.Data> data) {
+        dataList.clear();
         dataList.addAll(data);
         notifyDataSetChanged();
     }
 
     public interface AdapterListener {
-        void onClick(NoteModel.Data data);
+        void onUpdate(NoteModel.Data data);
+        void onDelete(NoteModel.Data data);
     }
 }
