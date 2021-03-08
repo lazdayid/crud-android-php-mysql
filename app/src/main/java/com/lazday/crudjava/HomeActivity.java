@@ -50,7 +50,10 @@ public class HomeActivity extends AppCompatActivity {
         noteAdapter = new NoteAdapter(new ArrayList<>(), new NoteAdapter.AdapterListener() {
             @Override
             public void onUpdate(NoteModel.Data data) {
-                Toast.makeText(getApplicationContext(), data.getNote(), Toast.LENGTH_SHORT).show();
+                startActivity(
+                        new Intent(HomeActivity.this, UpdateActivity.class)
+                        .putExtra("intent_data", data)
+                );
             }
             @Override
             public void onDelete(NoteModel.Data data) {

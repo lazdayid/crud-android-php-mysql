@@ -1,5 +1,6 @@
 package com.lazday.crudjava;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class NoteModel {
@@ -21,7 +22,7 @@ public class NoteModel {
                 '}';
     }
 
-    public class Data{
+    public class Data implements Serializable {
 
         private String id;
         private String note;
